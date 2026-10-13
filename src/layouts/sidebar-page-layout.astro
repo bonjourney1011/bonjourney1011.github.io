@@ -1,0 +1,41 @@
+---
+// Two-column layout: sticky profile sidebar on the left, page content on the right.
+import BaseLayout from './base-layout.astro';
+import ProfileSidebar from '../components/profile-sidebar.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="container shell">
+    <ProfileSidebar />
+    <div class="content">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .shell {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: clamp(40px, 7vw, 110px);
+    padding-top: 24px;
+  }
+  .content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+  @media (max-width: 900px) {
+    .shell {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>

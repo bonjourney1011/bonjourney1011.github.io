@@ -1,0 +1,14 @@
+---
+// Logo glyph: three ascending ledger bars. Also used as the favicon (public/favicon.svg).
+interface Props {
+  size?: number;
+}
+const { size = 24 } = Astro.props;
+---
+
+<svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
+  <rect width="32" height="32" rx="8" fill="#16181c"></rect>
+  <rect x="7" y="17" width="4.5" height="8" rx="1" fill="#8fd3ae"></rect>
+  <rect x="13.75" y="12" width="4.5" height="13" rx="1" fill="#8fd3ae"></rect>
+  <rect x="20.5" y="7" width="4.5" height="18" rx="1" fill="#f5f2eb"></rect>
+</svg>

@@ -1,0 +1,110 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/url-helpers';
+import DashboardStatusBadge from './dashboard-status-badge.astro';
+import { getPdfPageImages } from '../lib/dashboard-pdf-pages';
+
+interface Props {
+  entry: CollectionEntry<'dashboards'>;
+}
+const { entry } = Astro.props;
+const { title, summary, domain, embedUrl, pdf, pages, tools } = entry.data;
+const cover = getPdfPageImages(pdf)[0];
+const href = withBase(`/dashboards/${entry.id}`);
+---
+
+<article class="card">
+  <div class="thumb">
+    {
+      cover ? (
+        <img src={withBase(cover)} alt="" loading="lazy" width="1800" height="1032" />
+      ) : (
+        <div class="placeholder" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      )
+    }
+    <DashboardStatusBadge live={Boolean(embedUrl)} hasPdf={Boolean(cover)} />
+  </div>
+  <div class="body">
+    <p class="eyebrow">{domain} · {pages} {pages === 1 ? 'page' : 'pages'}</p>
+    <h3><a href={href}>{title}</a></h3>
+    <p class="summary">{summary}</p>
+    <p class="tools mono">{tools.join(' · ')}</p>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.25s var(--ease-out);
+  }
+  .card:hover {
+    transform: translateY(-2px);
+  }
+  .thumb {
+    position: relative;
+    aspect-ratio: 16 / 9.2;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+  /* placeholder: four bars, so empty dashboards still look like data */
+  .placeholder {
+    position: absolute;
+    inset: 22% 18% 18%;
+    display: flex;
+    align-items: flex-end;
+    gap: 10%;
+    border-bottom: 1px solid var(--ink-faint);
+  }
+  .placeholder span {
+    flex: 1;
+    background: var(--bar);
+    border-radius: 3px 3px 0 0;
+  }
+  .placeholder span:nth-child(1) { height: 35%; }
+  .placeholder span:nth-child(2) { height: 55%; }
+  .placeholder span:nth-child(3) { height: 48%; }
+  .placeholder span:nth-child(4) { height: 85%; background: var(--bar-strong); }
+  .body {
+    padding: 18px 20px 20px;
+  }
+  h3 {
+    font-size: 20px;
+    margin: 4px 0 8px;
+  }
+  h3 a {
+    text-decoration: none;
+  }
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  .summary {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .tools {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+</style>

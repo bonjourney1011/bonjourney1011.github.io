@@ -1,0 +1,43 @@
+---
+import { skillGroups } from '../config/career-and-recognition';
+---
+
+<section aria-labelledby="skills-title">
+  <div class="section-head"><h2 id="skills-title">Toolkit</h2></div>
+  <div class="grid">
+    {
+      skillGroups.map((group) => (
+        <div>
+          <h3 class="eyebrow">{group.group}</h3>
+          <ul>
+            {group.items.map((item) => (
+              <li class="tag">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px 32px;
+  }
+  h3 {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+</style>

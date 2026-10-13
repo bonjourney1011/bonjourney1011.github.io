@@ -1,0 +1,92 @@
+---
+import { profile, socialLinks } from '../config/site-profile';
+import { isExternal } from '../lib/url-helpers';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="cta">
+      <p class="eyebrow">Let's talk</p>
+      <h2>Have a business question your data should be answering?</h2>
+      <a class="mail" href={`mailto:${profile.email}`}>{profile.email}</a>
+    </div>
+    <div class="bottom">
+      <ul>
+        {
+          socialLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target={isExternal(link.href) ? '_blank' : undefined}
+                rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mono small">© {year} {profile.brand} ({profile.fullName}) · {profile.location}</p>
+    </div>
+    <svg class="signature" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true">
+      <polyline
+        points="0,32 40,30 80,33 120,26 160,28 200,22 240,24 280,18 320,20 360,14 400,16 440,11 480,12 520,7 560,8 600,3"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        vector-effect="non-scaling-stroke"></polyline>
+    </svg>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 96px;
+    border-top: 1px solid var(--rule);
+    background: var(--paper-raised);
+    padding: 56px 0 24px;
+  }
+  .cta h2 {
+    font-size: clamp(26px, 4vw, 38px);
+    max-width: 18ch;
+    margin: 8px 0 18px;
+  }
+  .mail {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 40px;
+  }
+  ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul a {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .small {
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+  .signature {
+    width: 100%;
+    height: 40px;
+    margin-top: 24px;
+    color: var(--bar-strong);
+  }
+</style>

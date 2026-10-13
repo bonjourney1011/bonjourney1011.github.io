@@ -1,0 +1,53 @@
+---
+// Horizontal "fact sheet" row under an article title (role, period, stack, links...).
+interface Fact {
+  label: string;
+  value: string;
+  href?: string;
+}
+interface Props {
+  facts: Fact[];
+}
+const { facts } = Astro.props;
+---
+
+<dl class="facts">
+  {
+    facts.map((fact) => (
+      <div>
+        <dt class="eyebrow">{fact.label}</dt>
+        <dd>
+          {fact.href ? (
+            <a href={fact.href} target="_blank" rel="noopener noreferrer">
+              {fact.value} ↗
+            </a>
+          ) : (
+            fact.value
+          )}
+        </dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px 28px;
+    margin: 0;
+    padding: 18px 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+  dt {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  dd {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+</style>

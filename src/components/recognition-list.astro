@@ -1,0 +1,62 @@
+---
+import { recognition } from '../config/career-and-recognition';
+import { withBase } from '../lib/url-helpers';
+
+interface Props {
+  limit?: number;
+}
+const { limit } = Astro.props;
+const items = limit ? recognition.slice(0, limit) : recognition;
+---
+
+<section aria-labelledby="recognition-title">
+  <div class="section-head">
+    <h2 id="recognition-title">Research & recognition</h2>
+    {limit && <a class="arrow-link" href={withBase('/about#recognition')}>Full list →</a>}
+  </div>
+  <ul>
+    {
+      items.map((item) => (
+        <li>
+          <span class="year mono">{item.year}</span>
+          <div>
+            <p class="title">{item.title}</p>
+            <p class="detail">{item.detail}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  li:last-child {
+    border-bottom: 0;
+  }
+  .year {
+    font-size: 13px;
+    color: var(--ink-faint);
+    padding-top: 2px;
+  }
+  .title {
+    margin: 0;
+    font-weight: 600;
+  }
+  .detail {
+    margin: 2px 0 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+</style>

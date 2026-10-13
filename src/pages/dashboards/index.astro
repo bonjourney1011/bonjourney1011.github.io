@@ -1,0 +1,48 @@
+---
+import SidebarPageLayout from '../../layouts/sidebar-page-layout.astro';
+import DashboardCard from '../../components/dashboard-card.astro';
+import { getPublishedDashboards } from '../../lib/content-queries';
+
+const dashboards = await getPublishedDashboards();
+const liveCount = dashboards.filter((d) => d.data.embedUrl).length;
+---
+
+<SidebarPageLayout
+  title="Dashboards"
+  description="Interactive Power BI dashboards on e-commerce, retail and finance — built from business questions, not from available charts."
+>
+  <header class="page-head">
+    <p class="eyebrow">Dashboards · {liveCount} live, {dashboards.length - liveCount} coming</p>
+    <h1>Dashboards you can actually click.</h1>
+    <p class="lead">
+      Every report starts from a stakeholder's question and ends with a decision. Interactive versions are published
+      with Power BI <em>Publish to web</em> and use sample or public data only.
+    </p>
+  </header>
+  <div class="grid">
+    {dashboards.map((entry) => <DashboardCard entry={entry} />)}
+  </div>
+</SidebarPageLayout>
+
+<style>
+  .page-head h1 {
+    font-size: clamp(34px, 5vw, 50px);
+    margin: 6px 0 14px;
+    max-width: 16ch;
+  }
+  .lead {
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

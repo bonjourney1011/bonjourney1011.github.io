@@ -1,0 +1,96 @@
+---
+import { navLinks, profile } from '../config/site-profile';
+import { withBase } from '../lib/url-helpers';
+import BrandMark from './brand-mark.astro';
+
+const current = Astro.url.pathname.replace(/\/$/, '');
+const isActive = (href: string) => current.startsWith(withBase(href));
+---
+
+<header class="site-header container">
+  <a class="brand" href={withBase('/')} aria-label={`${profile.brand} — home`}>
+    <BrandMark size={26} />
+    <span>{profile.brand}</span>
+  </a>
+  <nav aria-label="Main">
+    <ul>
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={withBase(link.href)}
+              class:list={{ active: isActive(link.href) }}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  ul {
+    display: flex;
+    gap: clamp(14px, 3vw, 30px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    position: relative;
+    z-index: 0;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 4px 2px;
+  }
+  /* active state: a short mint "bar" under the label, echoing the headline bar */
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 6px;
+    background: var(--bar-strong);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out);
+    z-index: -1;
+  }
+  nav a:hover::after,
+  nav a.active::after {
+    transform: scaleX(1);
+  }
+  nav a:hover {
+    color: var(--ink);
+  }
+  @media (max-width: 480px) {
+    .brand span {
+      display: none;
+    }
+  }
+</style>

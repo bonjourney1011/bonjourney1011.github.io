@@ -1,0 +1,122 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/url-helpers';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+const { entry } = Astro.props;
+const { title, summary, category, kind, period, metric, stack } = entry.data;
+const href = withBase(`/work/${entry.id}`);
+---
+
+<article class="card" data-category={category}>
+  <div class="metric">
+    <span class="value mono">{metric.value}</span>
+    <span class="metric-label">{metric.label}</span>
+  </div>
+  <div class="body">
+    <p class="meta eyebrow">
+      <span class:list={['kind', kind.toLowerCase()]}>{kind}</span>
+      <span aria-hidden="true">·</span>
+      {period}
+    </p>
+    <h3><a href={href}>{title}</a></h3>
+    <p class="summary">{summary}</p>
+    <ul class="stack" aria-label="Tools">
+      {stack.slice(0, 5).map((tool) => <li class="tag">{tool}</li>)}
+    </ul>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 24px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    transition:
+      transform 0.25s var(--ease-out),
+      border-color 0.25s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--bar-strong);
+  }
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-right: 1px dashed var(--rule);
+    padding-right: 20px;
+  }
+  .value {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--accent-strong);
+    overflow-wrap: anywhere;
+  }
+  .metric-label {
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: var(--ink-faint);
+  }
+  .meta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 11px;
+  }
+  .kind.professional {
+    color: var(--accent-strong);
+  }
+  .kind.research {
+    color: var(--down);
+  }
+  h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  h3 a {
+    text-decoration: none;
+  }
+  /* whole card is clickable via the title link */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+  }
+  .summary {
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (max-width: 640px) {
+    .card {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 20px;
+    }
+    .metric {
+      border-right: 0;
+      border-bottom: 1px dashed var(--rule);
+      padding: 0 0 14px;
+    }
+  }
+</style>

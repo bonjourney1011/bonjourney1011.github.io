@@ -1,0 +1,88 @@
+---
+import SidebarPageLayout from '../layouts/sidebar-page-layout.astro';
+import ExperienceTimeline from '../components/experience-timeline.astro';
+import SkillsGrid from '../components/skills-grid.astro';
+import RecognitionList from '../components/recognition-list.astro';
+import { profile } from '../config/site-profile';
+import { withBase } from '../lib/url-helpers';
+---
+
+<SidebarPageLayout
+  title="About"
+  description={`About ${profile.fullName}: economics and finance background, e-commerce analytics experience, and what I'm building toward.`}
+>
+  <header class="page-head">
+    <p class="eyebrow">About</p>
+    <h1>An economist's instincts, an engineer's habits.</h1>
+  </header>
+
+  <section class="story" aria-label="My story">
+    <p>
+      I studied <strong>International Economics</strong> at Foreign Trade University, where statistics and econometrics
+      were the courses I couldn't put down. They taught me that a number is only interesting because of the decision
+      behind it — and that most "trends" deserve a second look before anyone acts on them.
+    </p>
+    <p>
+      Since 2025 I've worked at <strong>Metric.vn</strong>, a Vietnamese e-commerce market-intelligence platform, where
+      I became the key handler of the data analyst team. I own the company's most complex category for global brands,
+      and I build data products end to end — from API ingestion and dbt models to machine learning and the dashboards
+      managers actually open.
+    </p>
+    <p>
+      I'm now taking a <strong>Master of Applied Finance</strong> to go deeper on the financial side of commercial
+      decisions: unit economics, profitability and risk.
+    </p>
+    <p class="heading-to">
+      <span class="eyebrow">Where I'm heading</span>
+      Senior analytics roles where I own the metrics a commerce or financial business runs on — from definition and data
+      quality all the way to the decision.
+    </p>
+    <p class="cta-row">
+      <a class="arrow-link" href={withBase('/work')}>Read the case studies →</a>
+      <a class="arrow-link" href={`mailto:${profile.email}`}>Email me →</a>
+    </p>
+  </section>
+
+  <ExperienceTimeline />
+
+  <SkillsGrid />
+
+  <div id="recognition">
+    <RecognitionList />
+  </div>
+</SidebarPageLayout>
+
+<style>
+  .page-head h1 {
+    font-size: clamp(34px, 5vw, 50px);
+    margin-top: 6px;
+    max-width: 17ch;
+  }
+  .story {
+    font-size: 17.5px;
+    line-height: 1.75;
+    max-width: 64ch;
+  }
+  .heading-to {
+    margin-top: 28px;
+    padding: 18px 20px;
+    border-left: 3px solid var(--bar-strong);
+    background: var(--paper-raised);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1.45;
+  }
+  .heading-to .eyebrow {
+    display: block;
+    margin-bottom: 6px;
+  }
+  .cta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  #recognition {
+    scroll-margin-top: 24px;
+  }
+</style>

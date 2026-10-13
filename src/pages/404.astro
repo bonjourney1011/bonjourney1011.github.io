@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/base-layout.astro';
+import { withBase } from '../lib/url-helpers';
+---
+
+<BaseLayout title="Page not found">
+  <section class="container nf">
+    <p class="eyebrow">Error 404 · row not found</p>
+    <h1>This page didn't survive data cleaning.</h1>
+    <p>The link may be outdated. Try the case studies or dashboards instead.</p>
+    <p class="links">
+      <a class="arrow-link" href={withBase('/')}>← Home</a>
+      <a class="arrow-link" href={withBase('/work')}>Case studies →</a>
+      <a class="arrow-link" href={withBase('/dashboards')}>Dashboards →</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    max-width: 760px;
+    padding-top: 60px;
+  }
+  h1 {
+    font-size: clamp(34px, 6vw, 56px);
+    margin: 10px 0 16px;
+  }
+  .links {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+</style>

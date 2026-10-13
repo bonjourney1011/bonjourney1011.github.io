@@ -1,0 +1,130 @@
+---
+// Swipeable viewer for a dashboard PDF: one page per slide (CSS scroll-snap),
+// prev/next buttons, page counter, keyboard arrows, and a link to the full PDF.
+import { withBase } from '../lib/url-helpers';
+
+interface Props {
+  pages: string[];
+  pdf?: string;
+  title: string;
+}
+const { pages, pdf, title } = Astro.props;
+---
+
+<section class="swiper" data-swiper aria-roledescription="carousel" aria-label={`${title} — PDF pages`}>
+  <div class="track" data-track tabindex="0" aria-label="Swipe or use arrow keys to change page">
+    {
+      pages.map((src, i) => (
+        <figure class="slide" aria-roledescription="slide" aria-label={`Page ${i + 1} of ${pages.length}`}>
+          <img
+            src={withBase(src)}
+            alt={`${title} — page ${i + 1}`}
+            width="1800"
+            height="1032"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        </figure>
+      ))
+    }
+  </div>
+  <div class="controls">
+    <button type="button" data-prev aria-label="Previous page">←</button>
+    <span class="counter mono" aria-live="polite"><span data-current>1</span> / {pages.length}</span>
+    <button type="button" data-next aria-label="Next page">→</button>
+    {
+      pdf && (
+        <a class="arrow-link pdf-link" href={withBase(pdf)} target="_blank" rel="noopener">
+          Open full PDF ↗
+        </a>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-swiper]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const current = root.querySelector('[data-current]');
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]');
+    const next = root.querySelector<HTMLButtonElement>('[data-next]');
+    if (!track) return;
+    const total = track.children.length;
+    const index = () => Math.round(track.scrollLeft / track.clientWidth);
+    const go = (i: number) =>
+      track.scrollTo({ left: Math.max(0, Math.min(total - 1, i)) * track.clientWidth, behavior: 'smooth' });
+    const sync = () => {
+      const i = index();
+      if (current) current.textContent = String(i + 1);
+      if (prev) prev.disabled = i === 0;
+      if (next) next.disabled = i === total - 1;
+    };
+    prev?.addEventListener('click', () => go(index() - 1));
+    next?.addEventListener('click', () => go(index() + 1));
+    track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') go(index() + 1);
+      if (e.key === 'ArrowLeft') go(index() - 1);
+    });
+    sync();
+  });
+</script>
+
+<style>
+  .track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--paper-raised);
+    box-shadow: var(--shadow);
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+  .slide {
+    flex: 0 0 100%;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+  .slide img {
+    width: 100%;
+    height: auto;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
+    color: var(--ink);
+    font-size: 16px;
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .counter {
+    font-size: 13px;
+    color: var(--ink-soft);
+    min-width: 48px;
+    text-align: center;
+  }
+  .pdf-link {
+    margin-left: auto;
+  }
+</style>

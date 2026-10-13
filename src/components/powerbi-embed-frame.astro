@@ -1,0 +1,79 @@
+---
+// Responsive Power BI "Publish to web" frame.
+// Report canvas is 16:9; Power BI adds a ~36px page-navigation bar under it.
+import { POWERBI_EMBED_PREFIX } from '../config/site-profile';
+
+interface Props {
+  embedUrl: string;
+  title: string;
+}
+const { embedUrl, title } = Astro.props;
+// Defence in depth: the content schema already validates this.
+const safeUrl = embedUrl.startsWith(POWERBI_EMBED_PREFIX) ? embedUrl : '';
+---
+
+{
+  safeUrl && (
+    <figure class="embed">
+      <div class="frame">
+        <iframe
+          src={safeUrl}
+          title={`${title} — interactive Power BI report`}
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        />
+      </div>
+      <figcaption>
+        <span class="mono">Interactive · click any visual to cross-filter</span>
+        <a class="arrow-link" href={safeUrl} target="_blank" rel="noopener noreferrer">
+          Open full screen ↗
+        </a>
+      </figcaption>
+      <p class="mobile-hint mono">Tip: dashboards read best on a laptop or in landscape.</p>
+    </figure>
+  )
+}
+
+<style>
+  .embed {
+    margin: 0;
+  }
+  .frame {
+    position: relative;
+    width: 100%;
+    padding-top: calc(56.25% + 36px);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .mobile-hint {
+    display: none;
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-top: 6px;
+  }
+  @media (max-width: 640px) {
+    .mobile-hint {
+      display: block;
+    }
+  }
+</style>

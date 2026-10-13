@@ -1,0 +1,31 @@
+---
+interface Props {
+  live: boolean;
+  hasPdf: boolean;
+}
+const { live, hasPdf } = Astro.props;
+const label = live ? '● Live · interactive' : hasPdf ? 'PDF preview · interactive soon' : 'Interactive version soon';
+---
+
+<span class:list={['badge', { live }]}>{label}</span>
+
+<style>
+  .badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: var(--paper-raised);
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+  }
+  .live {
+    background: var(--ink);
+    color: var(--bar-strong);
+    border-color: var(--ink);
+  }
+</style>

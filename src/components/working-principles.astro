@@ -1,0 +1,54 @@
+---
+import { workingPrinciples } from '../config/career-and-recognition';
+---
+
+<section aria-labelledby="principles-title">
+  <div class="section-head">
+    <h2 id="principles-title">How I work</h2>
+    <span class="eyebrow">Question → data → decision</span>
+  </div>
+  <ol>
+    {
+      workingPrinciples.map((p) => (
+        <li>
+          <span class="step mono">{p.step}</span>
+          <h3>{p.title}</h3>
+          <p>{p.text}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 32px;
+  }
+  .step {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    border-bottom: 3px solid var(--bar-strong);
+    margin-bottom: 8px;
+  }
+  h3 {
+    font-size: 19px;
+    margin-bottom: 6px;
+  }
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 560px) {
+    ol {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+import { profile, socialLinks } from '../config/site-profile';
+import { isExternal, withBase } from '../lib/url-helpers';
+---
+
+<aside class="sidebar" aria-label="About the author">
+  {
+    profile.avatar ? (
+      <img class="avatar" src={withBase(profile.avatar)} alt={`Portrait of ${profile.brand}`} width="72" height="72" />
+    ) : (
+      <div class="avatar monogram" aria-hidden="true">
+        {profile.initials}
+      </div>
+    )
+  }
+  <p class="intro">
+    I'm <strong>{profile.brand}</strong>, a <a href={withBase('/about')}>{profile.role}</a> with a
+    background in economics and finance.
+  </p>
+  <p class="bio">{profile.shortBio}</p>
+
+  <p class="status"><span class="dot" aria-hidden="true"></span>{profile.availability}</p>
+
+  <p class="eyebrow">Find me</p>
+  <ul class="links">
+    {
+      socialLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            target={isExternal(link.href) ? '_blank' : undefined}
+            rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
+          >
+            {link.label} <span aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  {
+    profile.cvUrl && (
+      <a class="cv" href={withBase(profile.cvUrl)} download>
+        Download CV
+      </a>
+    )
+  }
+</aside>
+
+<style>
+  .sidebar {
+    position: sticky;
+    top: 32px;
+    align-self: start;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    box-shadow: 0 0 0 4px var(--paper-raised), 0 0 0 5px var(--rule);
+  }
+  .monogram {
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: var(--bar-strong);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 26px;
+  }
+  .intro {
+    color: var(--ink);
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-strong);
+    background: rgba(143, 211, 174, 0.22);
+    border: 1px solid var(--bar);
+    border-radius: 999px;
+    padding: 6px 10px;
+    margin-bottom: 24px;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    50% {
+      opacity: 0.35;
+    }
+  }
+  .links {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+  .links a {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .cv {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 9px 14px;
+    border-radius: 8px;
+  }
+  .cv:hover {
+    color: var(--paper);
+    background: var(--accent);
+  }
+  @media (max-width: 900px) {
+    .sidebar {
+      position: static;
+    }
+  }
+</style>

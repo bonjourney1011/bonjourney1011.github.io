@@ -1,0 +1,81 @@
+---
+import { impactLedger } from '../config/site-profile';
+---
+
+<section class="ledger" aria-labelledby="ledger-title">
+  <h2 id="ledger-title" class="sr-only">Impact in numbers</h2>
+  <ol>
+    {
+      impactLedger.map((item, i) => (
+        <li style={`--i:${i}`}>
+          <span class="value mono">{item.value}</span>
+          <span class="label">{item.label}</span>
+          <span class="note mono">{item.note}</span>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 20px 20px 0;
+    border-bottom: 1px solid var(--rule);
+    animation: rise 0.7s var(--ease-out) both;
+    animation-delay: calc(0.45s + var(--i) * 0.08s);
+  }
+  li:nth-child(even) {
+    padding-left: 20px;
+    border-left: 1px solid var(--rule);
+  }
+  li:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+  .value {
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .label {
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+  .note {
+    font-size: 11.5px;
+    color: var(--accent);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  @media (max-width: 560px) {
+    ol {
+      grid-template-columns: 1fr;
+    }
+    li,
+    li:nth-child(even) {
+      padding: 18px 0;
+      border-left: 0;
+    }
+    li:nth-last-child(2) {
+      border-bottom: 1px solid var(--rule);
+    }
+  }
+</style>

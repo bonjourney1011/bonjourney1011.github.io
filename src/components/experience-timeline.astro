@@ -1,0 +1,101 @@
+---
+import { education, experience } from '../config/career-and-recognition';
+---
+
+<section aria-labelledby="experience-title">
+  <div class="section-head"><h2 id="experience-title">Experience</h2></div>
+  <ol class="timeline">
+    {
+      experience.map((job) => (
+        <li>
+          <p class="period mono">{job.period}</p>
+          <div>
+            <h3>{job.title}</h3>
+            <p class="org">
+              {job.org} <span>— {job.orgNote}</span>
+            </p>
+            <ul>
+              {job.points.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<section aria-labelledby="education-title">
+  <div class="section-head"><h2 id="education-title">Education</h2></div>
+  <ol class="timeline">
+    {
+      education.map((item) => (
+        <li>
+          <p class="period mono">{item.period}</p>
+          <div>
+            <h3>{item.degree}</h3>
+            <p class="org">{item.school}</p>
+            <p class="note">{item.note}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .timeline > li {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .timeline > li:last-child {
+    border-bottom: 0;
+  }
+  .period {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin: 4px 0 0;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  .org {
+    margin: 4px 0 10px;
+    font-weight: 600;
+    color: var(--accent-strong);
+  }
+  .org span {
+    font-weight: 400;
+    color: var(--ink-faint);
+  }
+  ul {
+    margin: 0;
+    padding-left: 1.1em;
+    color: var(--ink-soft);
+  }
+  ul li {
+    margin-bottom: 6px;
+  }
+  ul li::marker {
+    color: var(--accent);
+  }
+  .note {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 640px) {
+    .timeline > li {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

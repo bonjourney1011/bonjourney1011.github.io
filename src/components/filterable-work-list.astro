@@ -1,0 +1,88 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CaseStudyCard from './case-study-card.astro';
+import { categoryLabels } from '../lib/content-queries';
+
+interface Props {
+  entries: CollectionEntry<'work'>[];
+}
+const { entries } = Astro.props;
+const used = [...new Set(entries.map((e) => e.data.category))];
+const filters = [{ key: 'all', label: 'All' }, ...used.map((key) => ({ key, label: categoryLabels[key] }))];
+---
+
+<div class="filterable" data-filterable>
+  <div class="filters" role="group" aria-label="Filter case studies">
+    {
+      filters.map((f, i) => (
+        <button type="button" data-filter={f.key} aria-pressed={i === 0 ? 'true' : 'false'}>
+          {f.label}
+        </button>
+      ))
+    }
+  </div>
+  <div class="list">
+    {entries.map((entry) => <CaseStudyCard entry={entry} />)}
+  </div>
+  <p class="count mono" aria-live="polite"><span data-count>{entries.length}</span> case studies</p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-filterable]').forEach((root) => {
+    const buttons = root.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const cards = root.querySelectorAll<HTMLElement>('[data-category]');
+    const count = root.querySelector('[data-count]');
+    buttons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.filter;
+        let shown = 0;
+        cards.forEach((card) => {
+          const match = key === 'all' || card.dataset.category === key;
+          card.hidden = !match;
+          if (match) shown += 1;
+        });
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        if (count) count.textContent = String(shown);
+      }),
+    );
+  });
+</script>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+  button {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  button:hover {
+    border-color: var(--ink-faint);
+  }
+  button[aria-pressed='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .list {
+    display: grid;
+    gap: 16px;
+  }
+  .list :global([hidden]) {
+    display: none !important;
+  }
+  .count {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+</style>

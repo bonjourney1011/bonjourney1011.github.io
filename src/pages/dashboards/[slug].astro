@@ -1,0 +1,132 @@
+---
+import '../../styles/prose-article-body.css';
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/base-layout.astro';
+import ArticleFactStrip from '../../components/article-fact-strip.astro';
+import PowerbiEmbedFrame from '../../components/powerbi-embed-frame.astro';
+import PdfPageSwiper from '../../components/pdf-page-swiper.astro';
+import { getPdfPageImages } from '../../lib/dashboard-pdf-pages';
+import { getPublishedDashboards } from '../../lib/content-queries';
+import { formatMonthYear, withBase } from '../../lib/url-helpers';
+
+export async function getStaticPaths() {
+  const dashboards = await getPublishedDashboards();
+  return dashboards.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+const work = data.work ? await getEntry('work', data.work) : undefined;
+const pdfPages = getPdfPageImages(data.pdf);
+
+const facts = [
+  { label: 'Domain', value: data.domain },
+  { label: 'Built with', value: data.tools.join(', ') },
+  { label: 'Updated', value: formatMonthYear(data.updated) },
+  ...(data.pdf ? [{ label: 'Static copy', value: 'PDF', href: withBase(data.pdf) }] : []),
+  ...(data.repoUrl ? [{ label: 'Files', value: 'PBIX on GitHub', href: data.repoUrl }] : []),
+];
+---
+
+<BaseLayout title={data.title} description={data.summary} ogImage={pdfPages[0]}>
+  <div class="container wide">
+    <a class="arrow-link back" href={withBase('/dashboards')}>← All dashboards</a>
+    <p class="eyebrow kicker">
+      {data.embedUrl ? 'Live · interactive Power BI' : 'PDF preview · swipe through the pages · interactive version soon'}
+    </p>
+    <h1>{data.title}</h1>
+    <p class="lead">{data.summary}</p>
+
+    <ArticleFactStrip facts={facts} />
+
+    <div class="stage">
+      {
+        data.embedUrl ? (
+          <PowerbiEmbedFrame embedUrl={data.embedUrl} title={data.title} />
+        ) : pdfPages.length > 0 ? (
+          <PdfPageSwiper pages={pdfPages} pdf={data.pdf} title={data.title} />
+        ) : (
+          <div class="pending mono">
+            The interactive report is being prepared for public release. Meanwhile, the PBIX file is on GitHub.
+          </div>
+        )
+      }
+    </div>
+
+    <div class="notes">
+      <div class="prose">
+        <Content />
+      </div>
+      {
+        work && !work.data.draft && (
+          <aside class="story">
+            <p class="eyebrow">The story behind it</p>
+            <a href={withBase(`/work/${work.id}`)}>{work.data.title} →</a>
+          </aside>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .wide {
+    max-width: var(--page-max);
+    padding-top: 16px;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 28px;
+  }
+  .kicker {
+    color: var(--accent);
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 50px);
+    margin: 8px 0 12px;
+  }
+  .lead {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+  .stage {
+    margin: 36px 0 48px;
+    display: grid;
+    gap: 28px;
+  }
+  .pending {
+    padding: 48px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    border: 1px dashed var(--ink-faint);
+    border-radius: var(--radius);
+    background: var(--paper-raised);
+  }
+  .notes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 48px;
+    align-items: start;
+  }
+  .story {
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+  }
+  .story a {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.25;
+    text-decoration: none;
+  }
+  @media (max-width: 860px) {
+    .notes {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
