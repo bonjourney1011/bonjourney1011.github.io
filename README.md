@@ -1,4 +1,4 @@
-# Mo Thuần — Data Analyst Portfolio
+# Mo Thuan — Data Analyst Portfolio
 
 Static portfolio site built with [Astro](https://astro.build). Case studies and dashboards are plain
 Markdown files; the build validates every Power BI embed link.
