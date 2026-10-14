@@ -23,6 +23,7 @@ export const profile = {
 export const socialLinks = [
   { label: 'LinkedIn', icon: 'linkedin', href: 'https://www.linkedin.com/in/thunbonmo' },
   { label: 'GitHub', icon: 'github', href: 'https://github.com/bonjourney1011' },
+  { label: 'Facebook', icon: 'facebook', href: 'https://www.facebook.com/thuanbon.mo/' },
   { label: 'Email', icon: 'email', href: `mailto:${profile.email}` },
 ] as const;
 
