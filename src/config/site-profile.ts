@@ -2,7 +2,7 @@
 // Edit this file to change what the sidebar, header, footer and SEO tags show.
 
 export const profile = {
-  brand: 'Mo Thuan',
+  brand: 'Mo Thuần',
   fullName: 'Van Thi Thuan',
   role: 'Data Analyst',
   focus: 'Economics × Finance × E-commerce',
@@ -15,9 +15,9 @@ export const profile = {
   email: 'chucnguyen1779@gmail.com',
   // Put a public CV (without your phone number) at public/cv.pdf and set '/cv.pdf'.
   cvUrl: '',
-  seoTitle: 'Mo Thuan · Data Analyst — Economics, Finance & E-commerce',
+  seoTitle: 'Mo Thuần · Data Analyst — Economics, Finance & E-commerce',
   seoDescription:
-    'Portfolio of Mo Thuan (Van Thi Thuan), a data analyst with an economics and finance background solving real e-commerce business problems with SQL, dbt, Power BI and machine learning.',
+    'Portfolio of Mo Thuần (Van Thi Thuan), a data analyst with an economics and finance background solving real e-commerce business problems with SQL, dbt, Power BI and machine learning.',
 };
 
 export const socialLinks = [
