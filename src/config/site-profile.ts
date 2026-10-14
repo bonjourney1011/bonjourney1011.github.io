@@ -29,7 +29,8 @@ export const socialLinks = [
 export const navLinks = [
   { label: 'Work', href: '/work' },
   { label: 'Dashboards', href: '/dashboards' },
-  { label: 'My Own', href: '/my-own' },
+  // Hidden for now. To publish: uncomment, and rename src/pages/_my-own.astro → my-own.astro
+  // { label: 'My Own', href: '/my-own' },
   { label: 'About', href: '/about' },
 ];
 
