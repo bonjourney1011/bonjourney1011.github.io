@@ -58,4 +58,21 @@ const dashboards = defineCollection({
   }),
 });
 
-export const collections = { work, dashboards };
+// Products and ventures built on my own time ("My Own" tab).
+const ownProjects = defineCollection({
+  loader: glob({ pattern: ignoreUnderscore, base: './src/content/my-own' }),
+  schema: z.object({
+    title: z.string(),
+    tagline: z.string(),
+    status: z.enum(['Live', 'Building', 'Paused']),
+    role: z.string(),
+    started: z.string(),
+    url: z.union([z.url(), z.literal('')]).default(''), // live site; empty until launch
+    repoUrl: z.url().optional(), // only for public repos
+    stack: z.array(z.string()),
+    order: z.number(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { work, dashboards, ownProjects };

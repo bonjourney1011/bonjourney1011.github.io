@@ -11,7 +11,7 @@ export const profile = {
   initials: 'MT',
   shortBio:
     'I help e-commerce and finance teams find out what really moved their numbers — and what to do about it.',
-  availability: 'Open to analytics roles in commerce, fintech & banking',
+  availability: 'Passionate about data in commerce, fintech & banking',
   email: 'chucnguyen1779@gmail.com',
   // Put a public CV (without your phone number) at public/cv.pdf and set '/cv.pdf'.
   cvUrl: '',
@@ -21,14 +21,15 @@ export const profile = {
 };
 
 export const socialLinks = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/thunbonmo' },
-  { label: 'GitHub', href: 'https://github.com/bonjourney1011' },
-  { label: 'Email', href: `mailto:${profile.email}` },
-];
+  { label: 'LinkedIn', icon: 'linkedin', href: 'https://www.linkedin.com/in/thunbonmo' },
+  { label: 'GitHub', icon: 'github', href: 'https://github.com/bonjourney1011' },
+  { label: 'Email', icon: 'email', href: `mailto:${profile.email}` },
+] as const;
 
 export const navLinks = [
   { label: 'Work', href: '/work' },
   { label: 'Dashboards', href: '/dashboards' },
+  { label: 'My Own', href: '/my-own' },
   { label: 'About', href: '/about' },
 ];
 

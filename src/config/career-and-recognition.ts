@@ -9,7 +9,7 @@ export const experience = [
     period: '06/2025 — Present',
     points: [
       'Led an end-to-end livestream basket recommendation product (API → warehouse → dbt → ML → dashboards) that helped the company win a new client.',
-      'Owned Beauty Care — the most complex category, ~50% of research revenue — serving 6 multinational brands with monthly Power BI reporting on 600K–740K SKU rows.',
+      'Owned Beauty Care — the most complex category, ~50% of research revenue — serving 4 multinational brands with monthly Power BI reporting on 600K–740K SKU rows and 3+ more with ad-hoc analyses.',
       'Unified CRM (120K leads, 25K deals), Facebook Ads and GA4 into a full-funnel star schema behind 7 Power BI pages and 3 Metabase dashboards.',
       'Designed a combo revenue-restatement method that removed double-counted revenue while preserving market totals; presented in 3 internal seminars.',
     ],
@@ -22,6 +22,16 @@ export const experience = [
     points: [
       'Built churn models (Logistic Regression, Decision Tree) reaching 79% accuracy on at-risk customers.',
       'Profiled customer segments that tripled service-package conversion from 1% to 3%.',
+    ],
+  },
+  {
+    org: 'Math and Science Summer Program (MaSSP)',
+    orgNote: 'Selective summer program',
+    title: 'Data Science Mentee',
+    period: '07/2023 — 08/2023',
+    points: [
+      'Built machine-learning models with Python, scikit-learn and TensorFlow.',
+      'Completed a final project on tabular reinforcement learning (Q-Learning).',
     ],
   },
 ];

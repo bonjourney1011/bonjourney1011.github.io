@@ -13,6 +13,11 @@ export async function getPublishedDashboards(): Promise<CollectionEntry<'dashboa
   return entries.sort(byOrder);
 }
 
+export async function getPublishedOwnProjects(): Promise<CollectionEntry<'ownProjects'>[]> {
+  const entries = await getCollection('ownProjects', ({ data }) => !data.draft);
+  return entries.sort(byOrder);
+}
+
 export const categoryLabels: Record<CollectionEntry<'work'>['data']['category'], string> = {
   ecommerce: 'E-commerce',
   finance: 'Finance',

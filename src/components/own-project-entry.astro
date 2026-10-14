@@ -1,0 +1,144 @@
+---
+import '../styles/prose-article-body.css';
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'ownProjects'>;
+}
+const { entry } = Astro.props;
+const { title, tagline, status, role, started, url, repoUrl, stack } = entry.data;
+const { Content } = await render(entry);
+---
+
+<article class="project" id={entry.id}>
+  <header>
+    <p class="meta">
+      <span class:list={['status', status.toLowerCase()]}>{status}</span>
+      <span class="eyebrow">Since {started} · {role}</span>
+    </p>
+    <h2>{title}</h2>
+    <p class="tagline">{tagline}</p>
+  </header>
+
+  <div class="prose body">
+    <Content />
+  </div>
+
+  <footer>
+    <ul class="stack" aria-label="Built with">
+      {stack.map((tool) => <li class="tag">{tool}</li>)}
+    </ul>
+    <p class="links">
+      {
+        url ? (
+          <a class="visit" href={url} target="_blank" rel="noopener noreferrer">
+            Visit {title} ↗
+          </a>
+        ) : (
+          <span class="soon mono">Launching soon</span>
+        )
+      }
+      {
+        repoUrl && (
+          <a class="arrow-link" href={repoUrl} target="_blank" rel="noopener noreferrer">
+            Code ↗
+          </a>
+        )
+      }
+    </p>
+  </footer>
+</article>
+
+<style>
+  .project {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: clamp(20px, 4vw, 36px);
+    scroll-margin-top: 24px;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-bottom: 10px;
+  }
+  .status {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    color: var(--ink-soft);
+  }
+  .status.live {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bar-strong);
+  }
+  .status.building {
+    background: rgba(143, 211, 174, 0.25);
+    border-color: var(--bar);
+    color: var(--accent-strong);
+  }
+  h2 {
+    font-size: clamp(28px, 4vw, 38px);
+  }
+  .tagline {
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin: 8px 0 0;
+  }
+  .body {
+    margin-top: 24px;
+    font-size: 16px;
+  }
+  .body :global(h3) {
+    font-size: 19px;
+  }
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--rule);
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 0;
+  }
+  .visit {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 9px 14px;
+    border-radius: 8px;
+  }
+  .visit:hover {
+    color: var(--paper);
+    background: var(--accent);
+  }
+  .soon {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+  }
+</style>

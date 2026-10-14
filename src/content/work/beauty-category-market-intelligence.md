@@ -1,13 +1,13 @@
 ---
-title: Owning the most complex category for six global beauty brands
+title: Owning the most complex category for global beauty brands
 summary: Monthly market-intelligence reporting on 600K–740K SKU rows, a revenue-restatement method that stopped double counting, and ML + LLM product tagging at 92.3% accuracy.
 category: ecommerce
 kind: Professional
 period: 2025 — Present
 role: Key handler, Beauty Care category
 metric:
-  value: '6'
-  label: multinational brands served with monthly category reports
+  value: 4 + 3
+  label: multinational brands — 4 on monthly reports, 3+ with ad-hoc analyses
 stack: [Power BI, SQL, Python, LLM APIs, scikit-learn]
 order: 2
 featured: true
@@ -20,7 +20,7 @@ Beauty Care is the most complex category on a marketplace intelligence platform 
 
 ## What I did
 
-- **Ran the category end to end** as the DA team's key handler, single-handedly serving 6 multinational brands with monthly Power BI dashboards built on **600K–740K SKU rows**.
+- **Ran the category end to end** as the DA team's key handler, single-handedly serving **4 multinational brands with monthly Power BI dashboards** built on 600K–740K SKU rows, plus **3+ more brands with ad-hoc analyses**.
 - **Fixed a long-standing double-counting problem.** Revenue from combo listings was being double counted, distorting product- and brand-level numbers. I designed a combo revenue-restatement algorithm that removes the double counting while **preserving market totals**, so reports reflect the true market. I later presented it in 3 internal seminars.
 - **Automated product tagging.** Combined classical ML with LLMs to classify products by attribute, reaching **92.3% accuracy on 852K rows** (vs. an 88.4% baseline), and tagged 29.9K SKUs by prompting a multimodal LLM with both product text and images.
 

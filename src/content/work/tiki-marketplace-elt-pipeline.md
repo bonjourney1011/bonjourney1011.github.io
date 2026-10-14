@@ -10,6 +10,7 @@ metric:
   label: incremental refresh, tested end to end
 stack: [Python, PostgreSQL, dbt, Airflow, Docker, Power BI]
 order: 5
+draft: true
 ---
 
 ## The business question

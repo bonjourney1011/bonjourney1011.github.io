@@ -1,6 +1,7 @@
 ---
 import { profile, socialLinks } from '../config/site-profile';
 import { isExternal, withBase } from '../lib/url-helpers';
+import SocialIcon from './social-icon.astro';
 ---
 
 <aside class="sidebar" aria-label="About the author">
@@ -30,8 +31,10 @@ import { isExternal, withBase } from '../lib/url-helpers';
             href={link.href}
             target={isExternal(link.href) ? '_blank' : undefined}
             rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
+            aria-label={link.label}
+            title={link.label}
           >
-            {link.label} <span aria-hidden="true">↗</span>
+            <SocialIcon name={link.icon} />
           </a>
         </li>
       ))
@@ -105,12 +108,26 @@ import { isExternal, withBase } from '../lib/url-helpers';
     padding: 0;
     margin: 8px 0 20px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
+    gap: 10px;
   }
   .links a {
-    font-weight: 500;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
     color: var(--ink);
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      transform 0.2s var(--ease-out);
+  }
+  .links a:hover {
+    color: var(--accent);
+    border-color: var(--bar-strong);
+    transform: translateY(-2px);
   }
   .cv {
     display: inline-block;
