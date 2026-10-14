@@ -25,12 +25,12 @@ export const experience = [
     ],
   },
   {
-    org: 'Math and Science Summer Program (MaSSP)',
-    orgNote: 'Selective summer program',
+    org: 'Vietnam Institute for Advanced Study in Mathematics (VIASM)',
+    orgNote: 'Math and Science Summer Program (MaSSP)',
     title: 'Data Science Mentee',
     period: '07/2023 — 08/2023',
     points: [
-      'Built machine-learning models with Python, scikit-learn and TensorFlow.',
+      'Studied a wide range of deep learning, not only classical machine learning, and built models with Python, TensorFlow and scikit-learn.',
       'Completed a final project on tabular reinforcement learning (Q-Learning).',
     ],
   },
