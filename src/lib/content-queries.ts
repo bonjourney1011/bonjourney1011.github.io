@@ -19,7 +19,7 @@ export async function getPublishedOwnProjects(): Promise<CollectionEntry<'ownPro
 }
 
 export const categoryLabels: Record<CollectionEntry<'work'>['data']['category'], string> = {
-  ecommerce: 'E-commerce',
+  ecommerce: 'Commerce & retail',
   finance: 'Finance',
   engineering: 'Analytics engineering',
   research: 'Research',
