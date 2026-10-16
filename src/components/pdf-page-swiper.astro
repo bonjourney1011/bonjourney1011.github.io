@@ -1,39 +1,54 @@
 ---
-// Swipeable viewer for a dashboard PDF: one page per slide (CSS scroll-snap),
-// prev/next buttons, page counter, keyboard arrows, and a link to the full PDF.
+// Swipeable viewer for dashboard PDF pages (CSS scroll-snap + src/scripts/page-swiper.ts).
+//   variant="full"    → dashboard page: big slides, controls row, "Open full PDF" link
+//   variant="compact" → dashboard card: small slides, overlay arrows, counter pill; slides link to `href`
 import { withBase } from '../lib/url-helpers';
 
 interface Props {
   pages: string[];
-  pdf?: string;
   title: string;
+  pdf?: string;
+  variant?: 'full' | 'compact';
+  href?: string;
 }
-const { pages, pdf, title } = Astro.props;
+const { pages, pdf, title, variant = 'full', href } = Astro.props;
+const compact = variant === 'compact';
 ---
 
-<section class="swiper" data-swiper aria-roledescription="carousel" aria-label={`${title} — PDF pages`}>
-  <div class="track" data-track tabindex="0" aria-label="Swipe or use arrow keys to change page">
+<section
+  class:list={['swiper', variant]}
+  data-swiper
+  aria-roledescription="carousel"
+  aria-label={`${title} — dashboard pages`}
+>
+  <div class="track" data-track tabindex="0" aria-label="Swipe, drag or use arrow keys to change page">
     {
       pages.map((src, i) => (
         <figure class="slide" aria-roledescription="slide" aria-label={`Page ${i + 1} of ${pages.length}`}>
-          <img
-            src={withBase(src)}
-            alt={`${title} — page ${i + 1}`}
-            width="1800"
-            height="1032"
-            loading={i === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-          />
+          {compact && href ? (
+            <a href={href} tabindex="-1">
+              <img src={withBase(src)} alt="" width="1800" height="1040" loading="lazy" decoding="async" />
+            </a>
+          ) : (
+            <img
+              src={withBase(src)}
+              alt={`${title} — page ${i + 1}`}
+              width="1800"
+              height="1040"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          )}
         </figure>
       ))
     }
   </div>
   <div class="controls">
-    <button type="button" data-prev aria-label="Previous page">←</button>
+    <button type="button" class="nav prev" data-prev aria-label="Previous page">←</button>
     <span class="counter mono" aria-live="polite"><span data-current>1</span> / {pages.length}</span>
-    <button type="button" data-next aria-label="Next page">→</button>
+    <button type="button" class="nav next" data-next aria-label="Next page">→</button>
     {
-      pdf && (
+      !compact && pdf && (
         <a class="arrow-link pdf-link" href={withBase(pdf)} target="_blank" rel="noopener">
           Open full PDF ↗
         </a>
@@ -43,31 +58,7 @@ const { pages, pdf, title } = Astro.props;
 </section>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-swiper]').forEach((root) => {
-    const track = root.querySelector<HTMLElement>('[data-track]');
-    const current = root.querySelector('[data-current]');
-    const prev = root.querySelector<HTMLButtonElement>('[data-prev]');
-    const next = root.querySelector<HTMLButtonElement>('[data-next]');
-    if (!track) return;
-    const total = track.children.length;
-    const index = () => Math.round(track.scrollLeft / track.clientWidth);
-    const go = (i: number) =>
-      track.scrollTo({ left: Math.max(0, Math.min(total - 1, i)) * track.clientWidth, behavior: 'smooth' });
-    const sync = () => {
-      const i = index();
-      if (current) current.textContent = String(i + 1);
-      if (prev) prev.disabled = i === 0;
-      if (next) next.disabled = i === total - 1;
-    };
-    prev?.addEventListener('click', () => go(index() - 1));
-    next?.addEventListener('click', () => go(index() + 1));
-    track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
-    track.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') go(index() + 1);
-      if (e.key === 'ArrowLeft') go(index() - 1);
-    });
-    sync();
-  });
+  import '../scripts/page-swiper';
 </script>
 
 <style>
@@ -77,13 +68,16 @@ const { pages, pdf, title } = Astro.props;
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
+    cursor: grab;
     background: var(--paper-raised);
-    box-shadow: var(--shadow);
   }
   .track::-webkit-scrollbar {
     display: none;
+  }
+  .track.dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
   }
   .slide {
     flex: 0 0 100%;
@@ -93,38 +87,101 @@ const { pages, pdf, title } = Astro.props;
   .slide img {
     width: 100%;
     height: auto;
+    display: block;
   }
-  .controls {
+  .nav {
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .nav:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .nav:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .counter {
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  /* full: dashboard detail page */
+  .full .track {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .full .controls {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-top: 14px;
   }
-  button {
+  .full .nav {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--rule);
-    background: var(--paper-raised);
-    color: var(--ink);
     font-size: 16px;
-    cursor: pointer;
   }
-  button:hover:not(:disabled) {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  button:disabled {
-    opacity: 0.35;
-    cursor: default;
-  }
-  .counter {
+  .full .counter {
     font-size: 13px;
-    color: var(--ink-soft);
     min-width: 48px;
-    text-align: center;
   }
-  .pdf-link {
+  .full .pdf-link {
     margin-left: auto;
+  }
+
+  /* compact: dashboard card thumbnail — sits above the card's full-card link */
+  .compact {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+  .compact .track {
+    height: 100%;
+  }
+  .compact .slide img {
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+  .compact .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .compact .prev {
+    left: 10px;
+  }
+  .compact .next {
+    right: 10px;
+  }
+  .compact:hover .nav:not(:disabled),
+  .compact .nav:focus-visible {
+    opacity: 1;
+  }
+  .compact .counter {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(22, 24, 28, 0.72);
+    color: var(--paper);
+  }
+  @media (hover: none) {
+    .compact .nav {
+      display: none;
+    }
   }
 </style>
