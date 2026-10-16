@@ -7,3 +7,7 @@ dist/
 
 # internal planning notes (not published)
 plans/
+
+# FTU exam data and answer-key tests: kept local only
+tests/portfolio-optimizer/fixtures/
+tests/portfolio-optimizer/excel-reference-values.test.ts

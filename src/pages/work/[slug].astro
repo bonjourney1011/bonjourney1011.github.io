@@ -4,6 +4,7 @@ import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/base-layout.astro';
 import ArticleFactStrip from '../../components/article-fact-strip.astro';
 import DashboardCard from '../../components/dashboard-card.astro';
+import PortfolioOptimizerTool from '../../components/portfolio-optimizer/portfolio-optimizer-tool.astro';
 import { categoryLabels, getPublishedWork } from '../../lib/content-queries';
 import { withBase } from '../../lib/url-helpers';
 
@@ -41,6 +42,8 @@ const facts = [
     </div>
 
     <ArticleFactStrip facts={facts} />
+
+    {data.tool === 'portfolio-optimizer' && <PortfolioOptimizerTool />}
 
     <div class="prose body">
       <Content />

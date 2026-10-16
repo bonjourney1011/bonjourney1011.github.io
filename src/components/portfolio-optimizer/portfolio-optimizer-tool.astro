@@ -1,0 +1,50 @@
+---
+// Interactive Markowitz portfolio optimizer, shown on its case-study page (work entry with tool: portfolio-optimizer).
+// All computation runs in the browser; prices come live from VNDirect (fallback KBS, then a bundled snapshot).
+import OptimizerInputForm from './optimizer-input-form.astro';
+import OptimizerResultsPanel from './optimizer-results-panel.astro';
+---
+
+<section class="optimizer" data-portfolio-optimizer aria-label="Portfolio optimizer">
+  <p class="eyebrow kicker">Try it: live Vietnamese market data</p>
+  <OptimizerInputForm />
+  <p class="status mono" data-status role="status" aria-live="polite"></p>
+  <OptimizerResultsPanel />
+  <p class="disclaimer">
+    Prices: VNDirect chart API (split and bonus-share adjusted), KB Securities as fallback. Educational tool, not
+    investment advice.
+  </p>
+</section>
+
+<script>
+  import '../../scripts/portfolio-optimizer/optimizer-page-controller';
+</script>
+
+<style>
+  /* Break out of the 860px article column so tables and charts have room. */
+  .optimizer {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1040px, calc(100vw - 2 * var(--gutter)));
+    margin: 48px 0 56px;
+  }
+  .kicker {
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .status {
+    min-height: 1.6em;
+    margin: 14px 0 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .status:global(.error) {
+    color: var(--down);
+  }
+  .disclaimer {
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+</style>

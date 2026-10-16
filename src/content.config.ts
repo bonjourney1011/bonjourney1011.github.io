@@ -26,6 +26,7 @@ const work = defineCollection({
     repoUrl: z.url().optional(),
     dashboard: z.string().optional(), // slug of a dashboards entry
     cover: z.string().optional(), // path under /public
+    tool: z.enum(['portfolio-optimizer']).optional(), // interactive tool rendered above the write-up
   }),
 });
 

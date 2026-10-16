@@ -22,6 +22,17 @@ npm run preview    # serve dist/
 | Dashboards (one `.md` per report) | `src/content/dashboards/` |
 | Images | `public/images/...` |
 | Colours & fonts | `src/styles/global-tokens-and-base.css` |
+| Portfolio optimizer (interactive tool on a case study via `tool: portfolio-optimizer`) | `src/components/portfolio-optimizer/`, `src/scripts/portfolio-optimizer/` |
+
+## Portfolio optimizer
+
+Runs fully in the browser: live daily prices from the VNDirect chart API (fallback KB Securities, both allowed in
+the CSP `connect-src`), then a long-only Markowitz optimisation with a volatility cap and a train/test backtest.
+
+- `npm run test` runs solver property checks and the full pipeline on public prices (`tests/portfolio-optimizer/`).
+  The checks against the FTU midterm spreadsheets use exam data, so they stay local (gitignored).
+- `node scripts/fetch-portfolio-optimizer-demo-prices.mjs` refreshes the offline snapshot
+  (`public/data/portfolio-optimizer/demo-prices.json`) used only when both APIs are unreachable.
 
 ## Dashboards: PDF now, interactive Power BI later
 

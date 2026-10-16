@@ -17,12 +17,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = ogImage ? new URL(withBase(ogImage), Astro.site).href : undefined;
 
 // Production-only CSP: only Power BI may be framed; no third-party scripts at all.
+// connect-src: the portfolio optimizer reads daily prices from VNDirect and KB Securities (public chart APIs).
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data:",
+  "connect-src 'self' https://dchart-api.vndirect.com.vn https://kbbuddywts.kbsec.com.vn",
   'frame-src https://app.powerbi.com',
   "base-uri 'self'",
   "form-action 'none'",

@@ -1,0 +1,124 @@
+---
+// Result containers for the portfolio optimizer. Content is built at runtime by
+// src/scripts/portfolio-optimizer/*, so the styles are global but namespaced under .optimizer-results.
+---
+
+<div class="optimizer-results" data-results hidden>
+  <div class="headline-card" data-headline></div>
+  <div class="notes" data-notes></div>
+
+  <figure class="chart-host" data-risk-chart>
+    <figcaption>
+      <span class="eyebrow">Risk vs return</span>
+      Grey dots are 1,500 random long-only mixes; the dark curve is the efficient frontier; the dashed vertical line is
+      the σ cap. Hover a point for its numbers.
+    </figcaption>
+    <div data-canvas></div>
+    <div class="tooltip" data-tooltip hidden></div>
+  </figure>
+
+  <h3>Portfolios, ranked</h3>
+  <p class="caption">Portfolios within the σ cap come first, best Sharpe on top. Estimates use the estimation window only.</p>
+  <div class="table-scroll"><table data-table="portfolios"></table></div>
+
+  <h3>Weights</h3>
+  <div class="table-scroll"><table data-table="weights"></table></div>
+
+  <section data-backtest hidden>
+    <h3>Out-of-sample test</h3>
+    <p class="caption">
+      Weights fixed at the end of the estimation window, then held through the test window. In-sample Sharpe ratios are
+      optimistic; this is the honest check.
+    </p>
+    <div class="legend" data-wealth-legend></div>
+    <figure class="chart-host" data-wealth-chart>
+      <div data-canvas></div>
+      <div class="tooltip" data-tooltip hidden></div>
+    </figure>
+  </section>
+
+  <details>
+    <summary>Per-stock statistics and correlation matrix</summary>
+    <div class="table-scroll"><table data-table="assets"></table></div>
+    <div class="table-scroll"><table data-table="correlation" class="heatmap"></table></div>
+  </details>
+</div>
+
+<style is:global>
+  .optimizer-results { margin-top: 28px; }
+  .optimizer-results h3 { font-size: 22px; margin: 40px 0 6px; }
+  .optimizer-results .caption, .optimizer-results figcaption { font-size: 14px; color: var(--ink-soft); margin: 0 0 12px; }
+  .optimizer-results figcaption .eyebrow { display: block; color: var(--accent); }
+
+  .optimizer-results .headline-card {
+    padding: 22px; border: 2px solid var(--ink); border-radius: var(--radius); background: var(--paper-raised);
+  }
+  .optimizer-results .headline-card h3 { margin: 4px 0 14px; }
+  .optimizer-results .badge { display: inline-block; margin: 0; font: 600 12px var(--font-mono); letter-spacing: 0.02em;
+    padding: 3px 10px; border-radius: 999px; }
+  /* No uppercase where σ appears: text-transform would turn it into Σ. */
+  .optimizer-results .headline-stats dt { text-transform: none; letter-spacing: 0.02em; }
+  .optimizer-results .badge.ok { background: var(--bar); color: var(--accent-strong); }
+  .optimizer-results .badge.warn { background: #f6dcd3; color: var(--down); }
+  .optimizer-results .headline-stats { display: flex; flex-wrap: wrap; gap: 10px 32px; margin: 0 0 18px; }
+  .optimizer-results .headline-stats dd { margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+  .optimizer-results .weight-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .optimizer-results .weight-bars li { display: grid; grid-template-columns: 92px 1fr 56px; gap: 10px; align-items: center; }
+  .optimizer-results .weight-bars .track { height: 12px; background: var(--paper); border-radius: 4px; overflow: hidden; }
+  .optimizer-results .weight-bars .bar { display: block; height: 100%; border-radius: 0 4px 4px 0; }
+  .optimizer-results .weight-bars .value { text-align: right; font-size: 13px; }
+
+  .optimizer-results .notes { margin: 14px 0 26px; font-size: 14px; color: var(--ink-soft); }
+  .optimizer-results .notes p { margin: 0 0 4px; }
+
+  .optimizer-results .chart-host { position: relative; margin: 0; }
+  .optimizer-results .chart-svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--font-mono); }
+  .optimizer-results .chart-svg .grid { stroke: var(--rule); stroke-width: 1; }
+  .optimizer-results .chart-svg .baseline { stroke: var(--ink-faint); }
+  .optimizer-results .chart-svg .tick-mark { stroke: var(--ink-faint); }
+  .optimizer-results .chart-svg .tick { font-size: 11px; fill: var(--ink-faint); }
+  .optimizer-results .chart-svg .axis-title { font-size: 11px; fill: var(--ink-soft); letter-spacing: 0.04em; }
+  .optimizer-results .chart-svg .annotation { font-size: 11px; fill: var(--ink-soft); }
+  .optimizer-results .chart-svg .cloud circle { fill: var(--ink-faint); opacity: 0.22; }
+  .optimizer-results .chart-svg .cap-line { stroke: var(--down); stroke-width: 1.5; stroke-dasharray: 5 4; }
+  .optimizer-results .chart-svg .frontier { fill: none; stroke: var(--ink); stroke-width: 2; }
+  .optimizer-results .chart-svg .cal-line { stroke: #2a78d6; stroke-width: 2; stroke-dasharray: 7 5; }
+  .optimizer-results .chart-svg .rf-point { fill: #2a78d6; }
+  .optimizer-results .chart-svg .asset circle:not(.hit) { fill: var(--paper-raised); stroke: var(--ink-soft); stroke-width: 1.5; }
+  .optimizer-results .chart-svg .asset text { font-size: 11px; fill: var(--ink-soft); }
+  .optimizer-results .chart-svg .marker { stroke: var(--paper-raised); stroke-width: 2; }
+  .optimizer-results .chart-svg .marker-label { font-size: 11px; font-weight: 600; fill: var(--ink); paint-order: stroke;
+    stroke: var(--paper-raised); stroke-width: 3px; }
+  .optimizer-results .chart-svg .hit { fill: transparent; cursor: crosshair; }
+  .optimizer-results .chart-svg .par-line { stroke: var(--ink-faint); stroke-dasharray: 2 3; }
+  .optimizer-results .chart-svg .wealth-line { fill: none; stroke-width: 2; stroke-linejoin: round; }
+  .optimizer-results .chart-svg .wealth-line.benchmark { stroke-dasharray: 6 4; }
+  .optimizer-results .chart-svg .crosshair { stroke: var(--ink-faint); stroke-width: 1; }
+
+  .optimizer-results .tooltip {
+    position: absolute; z-index: 2; pointer-events: none; min-width: 150px; padding: 8px 10px;
+    font: 12px/1.5 var(--font-mono); color: var(--ink); background: var(--paper-raised);
+    border: 1px solid var(--rule); border-radius: 8px; box-shadow: var(--shadow); white-space: pre;
+  }
+  .optimizer-results .tooltip-title { font-weight: 600; font-family: var(--font-body); }
+
+  .optimizer-results .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; margin-bottom: 4px; }
+  .optimizer-results .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+  .optimizer-results .legend-item i { width: 18px; height: 3px; border-radius: 2px; }
+  .optimizer-results .legend-item.benchmark i { height: 0; border-top: 3px dashed var(--ink-soft); background: none !important; }
+
+  .optimizer-results .table-scroll { overflow-x: auto; margin-bottom: 8px; }
+  .optimizer-results table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  .optimizer-results th, .optimizer-results td { padding: 7px 10px; text-align: right; white-space: nowrap;
+    border-bottom: 1px solid var(--rule); }
+  .optimizer-results td { font-family: var(--font-mono); font-size: 13px; }
+  .optimizer-results th:first-child { text-align: left; font-weight: 500; }
+  .optimizer-results thead th { font: 500 12px var(--font-mono); letter-spacing: 0.02em;
+    color: var(--ink-faint); border-bottom: 1.5px solid var(--ink); }
+  .optimizer-results tr.top th, .optimizer-results tr.top td { background: rgba(191, 230, 207, 0.45); font-weight: 600; }
+  .optimizer-results .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+  .optimizer-results .heatmap td { text-align: center; }
+
+  .optimizer-results details { margin-top: 40px; }
+  .optimizer-results summary { cursor: pointer; font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+</style>
