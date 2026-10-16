@@ -10,6 +10,7 @@ tools: [Power BI, DAX, Field Parameters, SQL Server]
 work: global-retail-growth-story
 repoUrl: https://github.com/bonjourney1011/powerbi-retails-dashboard
 updated: 2026-06-23
+pdf: /dashboard-files/global-electronics-retail/global-electronics-retail-dashboard.pdf
 ---
 
 ## How to read it

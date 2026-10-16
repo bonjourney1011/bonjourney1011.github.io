@@ -12,6 +12,7 @@ stack: [Power BI, DAX, SQL Server, Field Parameters]
 order: 4
 repoUrl: https://github.com/bonjourney1011/powerbi-retails-dashboard
 dashboard: global-electronics-retail
+cover: /dashboard-files/global-electronics-retail/page-1.jpg
 ---
 
 ## The business question
