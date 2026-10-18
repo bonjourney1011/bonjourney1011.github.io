@@ -4,7 +4,7 @@ summary: Executive overview, profit deep dive, SLA hotspots and data-quality rec
 domain: E-commerce · Finance
 order: 1
 # Paste your Power BI "Publish to web" link here, e.g. https://app.powerbi.com/view?r=eyJrIjoi...
-embedUrl: ''
+embedUrl: 'https://app.powerbi.com/view?r=eyJrIjoiNjViODQwMDQtYTQ2ZS00YTI1LThkNTEtZGQzOTBkNWJhMTk2IiwidCI6ImNiNDg0NDZlLTkwZTYtNGJmMS04MjViLTQwZTQ4ZmNjOWZmNiJ9&pageName=3ccd4865cdce8e9fe234'
 pages: 4
 tools: [Power BI, DAX, Power Query, SQL, DuckDB]
 work: ecommerce-profit-drop-root-cause

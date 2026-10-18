@@ -4,7 +4,7 @@ summary: One model, three audiences — sales, finance and supply chain — for 
 domain: Distribution · Finance
 order: 3
 # Paste your Power BI "Publish to web" link here when ready.
-embedUrl: ''
+embedUrl: 'https://app.powerbi.com/view?r=eyJrIjoiNGI1YmNiYzctNWYxMS00MTAzLTg2YzktODg1ODA4N2IwNDgzIiwidCI6ImNiNDg0NDZlLTkwZTYtNGJmMS04MjViLTQwZTQ4ZmNjOWZmNiJ9'
 pages: 3
 tools: [Power BI, Power Query, DAX, Star schema]
 work: fnb-distribution-business-review

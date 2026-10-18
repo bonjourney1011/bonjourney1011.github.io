@@ -4,7 +4,7 @@ summary: Four business questions on six years of sales across 8 countries, 67 st
 domain: Retail · Growth
 order: 2
 # Paste your Power BI "Publish to web" link here when ready.
-embedUrl: ''
+embedUrl: 'https://app.powerbi.com/view?r=eyJrIjoiNjBlYmRhNWMtYTQ2OC00MjAzLTllYmItYTQyOTdmNTRhMjI4IiwidCI6ImNiNDg0NDZlLTkwZTYtNGJmMS04MjViLTQwZTQ4ZmNjOWZmNiJ9'
 pages: 4
 tools: [Power BI, DAX, Field Parameters, SQL Server]
 work: global-retail-growth-story
