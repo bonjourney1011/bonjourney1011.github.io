@@ -40,9 +40,16 @@ import SocialIcon from './social-icon.astro';
       ))
     }
   </ul>
+  <a class="pill book" href={withBase(profile.bookingUrl)}>
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+      <path d="M16 2v4M8 2v4M3 10h18"></path>
+    </svg>
+    Book me
+  </a>
   {
     profile.cvUrl && (
-      <a class="cv" href={withBase(profile.cvUrl)} download>
+      <a class="pill" href={withBase(profile.cvUrl)} download>
         Download CV
       </a>
     )
@@ -129,8 +136,11 @@ import SocialIcon from './social-icon.astro';
     border-color: var(--bar-strong);
     transform: translateY(-2px);
   }
-  .cv {
-    display: inline-block;
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 8px 8px 0;
     font-family: var(--font-mono);
     font-size: 13px;
     font-weight: 600;
@@ -140,7 +150,7 @@ import SocialIcon from './social-icon.astro';
     padding: 9px 14px;
     border-radius: 8px;
   }
-  .cv:hover {
+  .pill:hover {
     color: var(--paper);
     background: var(--accent);
   }

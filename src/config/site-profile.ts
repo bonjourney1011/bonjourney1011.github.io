@@ -15,6 +15,8 @@ export const profile = {
   email: 'chucnguyen1779@gmail.com',
   // Put a public CV (without your phone number) at public/cv.pdf and set '/cv.pdf'.
   cvUrl: '',
+  // 1:1 booking page (separate repo, same GitHub Pages domain). Shown in the nav and under "Find me".
+  bookingUrl: '/book-mo/',
   seoTitle: 'Mo Thuan · Data Analyst — Economics, Finance & E-commerce',
   seoDescription:
     'Portfolio of Mo Thuan (Van Thi Thuan), a data analyst with an economics and finance background solving real e-commerce business problems with SQL, dbt, Power BI and machine learning.',
@@ -33,6 +35,7 @@ export const navLinks = [
   // Hidden for now. To publish: uncomment, and rename src/pages/_my-own.astro → my-own.astro
   // { label: 'My Own', href: '/my-own' },
   { label: 'About', href: '/about' },
+  { label: 'Book Me', href: profile.bookingUrl },
 ];
 
 // Homepage "impact ledger". Every number here must be traceable to the CV or a repo.
