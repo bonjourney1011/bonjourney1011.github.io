@@ -7,7 +7,8 @@ started: '2026'
 # Paste the live link when it launches, e.g. https://mocar.com.vn
 url: ''
 stack: [Next.js, FastAPI, PostgreSQL, Docker]
-order: 1
+order: 2
+draft: true # hidden until it launches
 ---
 
 ### Why I'm building it

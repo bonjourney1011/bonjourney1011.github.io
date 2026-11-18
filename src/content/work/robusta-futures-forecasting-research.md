@@ -1,9 +1,9 @@
 ---
 title: Fair walk-forward forecasting of Robusta coffee futures
-summary: Co-authored research benchmarking statistical, machine-learning, deep-learning and hybrid models on ICE Robusta futures — evaluated without look-ahead bias. Accepted in a Scopus Q1 journal.
+summary: Co-authored research benchmarking statistical, machine-learning, deep-learning and hybrid models on ICE Robusta futures — evaluated without look-ahead bias. Published in a Scopus Q1 journal.
 category: research
 kind: Research
-period: Accepted 09/2026
+period: Published 11/2026
 role: Co-author
 metric:
   value: Q1
@@ -11,6 +11,7 @@ metric:
 stack: [Time-series forecasting, Machine learning, Deep learning, Walk-forward validation]
 order: 7
 featured: true
+paperUrl: https://ojs.bonviewpress.com/index.php/jdsis/article/view/11353
 ---
 
 ## The question
@@ -24,7 +25,9 @@ Vietnam is the world's largest Robusta producer, so Robusta futures prices matte
 
 ## Publication
 
-> "Fair Walk-Forward Forecasting of ICE Robusta Futures: Comparing Statistical, Machine-Learning, Deep-Learning and Hybrid Models." *Journal of Data Science and Intelligent Systems* (Scopus Q1, CiteScore 2025: 11.5). Accepted 09/2026.
+> "Fair Walk-Forward Forecasting of ICE Robusta Futures: Comparing Statistical, Machine-Learning, Deep-Learning, and Hybrid Models." *Journal of Data Science and Intelligent Systems* (Scopus Q1, CiteScore 2025: 11.5). Published online 04/11/2026. DOI: [10.47852/bonviewJDSIS620211353](https://doi.org/10.47852/bonviewJDSIS620211353)
+
+[Read the article ↗](https://ojs.bonviewpress.com/index.php/jdsis/article/view/11353)
 
 ## Why it matters for business analytics
 

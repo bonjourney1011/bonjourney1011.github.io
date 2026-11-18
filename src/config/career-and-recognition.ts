@@ -52,7 +52,7 @@ export const education = [
 ];
 
 export const recognition = [
-  { year: '2026', title: 'Co-author, Scopus Q1 journal article', detail: 'Journal of Data Science and Intelligent Systems — commodity futures forecasting' },
+  { year: '2026', title: 'Co-author, Scopus Q1 journal article', detail: 'Journal of Data Science and Intelligent Systems — commodity futures forecasting, published 11/2026', href: 'https://ojs.bonviewpress.com/index.php/jdsis/article/view/11353' },
   { year: '2026', title: 'Outstanding Student of FTU K61', detail: 'University-level honour' },
   { year: '2025', title: 'First Prize — FIT TechSpark 2025 (VNU-UET)', detail: 'InMentor, AI interview-prep startup · market research lead' },
   { year: '2025', title: 'Third Prize — FTU Student Research', detail: 'E-commerce return-fraud intent · team leader, 900+ responses' },

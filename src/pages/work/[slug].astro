@@ -25,6 +25,7 @@ const facts = [
   { label: 'Role', value: data.role },
   { label: 'Period', value: data.period },
   { label: 'Stack', value: data.stack.join(', ') },
+  ...(data.paperUrl ? [{ label: 'Paper', value: 'Journal article', href: data.paperUrl }] : []),
   ...(data.repoUrl ? [{ label: 'Code', value: 'GitHub repository', href: data.repoUrl }] : []),
 ];
 ---

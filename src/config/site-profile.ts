@@ -32,8 +32,7 @@ export const socialLinks = [
 export const navLinks = [
   { label: 'Work', href: '/work' },
   { label: 'Dashboards', href: '/dashboards' },
-  // Hidden for now. To publish: uncomment, and rename src/pages/_my-own.astro → my-own.astro
-  // { label: 'My Own', href: '/my-own' },
+  { label: 'What I Build', href: '/what-i-build' },
   { label: 'About', href: '/about' },
   { label: 'Book Me', href: profile.bookingUrl },
 ];
@@ -58,7 +57,7 @@ export const impactLedger = [
   {
     value: 'Q1',
     label: 'Scopus journal co-author on commodity futures forecasting',
-    note: 'Accepted 09/2026',
+    note: 'Published 11/2026',
   },
 ];
 

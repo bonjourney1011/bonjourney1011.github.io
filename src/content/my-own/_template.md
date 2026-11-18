@@ -1,5 +1,5 @@
 ---
-# HOW TO ADD A PROJECT TO "MY OWN"
+# HOW TO ADD A PROJECT TO "WHAT I BUILD"
 # 1. Copy this file to a new name without the leading "_" (e.g. my-new-app.md).
 # 2. Fill in the fields below and write the description under the front matter.
 # 3. Set draft: false (or delete the line), then commit and push to publish.

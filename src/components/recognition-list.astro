@@ -20,7 +20,15 @@ const items = limit ? recognition.slice(0, limit) : recognition;
         <li>
           <span class="year mono">{item.year}</span>
           <div>
-            <p class="title">{item.title}</p>
+            <p class="title">
+              {'href' in item && item.href ? (
+                <a href={item.href} target="_blank" rel="noopener noreferrer">
+                  {item.title} ↗
+                </a>
+              ) : (
+                item.title
+              )}
+            </p>
             <p class="detail">{item.detail}</p>
           </div>
         </li>

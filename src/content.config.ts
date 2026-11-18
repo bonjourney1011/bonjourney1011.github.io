@@ -26,6 +26,7 @@ const work = defineCollection({
     repoUrl: z.url().optional(),
     dashboard: z.string().optional(), // slug of a dashboards entry
     cover: z.string().optional(), // path under /public
+    paperUrl: z.url().optional(), // published article (journal page)
     tool: z.enum(['portfolio-optimizer']).optional(), // interactive tool rendered above the write-up
   }),
 });
@@ -59,7 +60,7 @@ const dashboards = defineCollection({
   }),
 });
 
-// Products and ventures built on my own time ("My Own" tab).
+// Products and ventures built on my own time ("What I Build" tab, /what-i-build).
 const ownProjects = defineCollection({
   loader: glob({ pattern: ignoreUnderscore, base: './src/content/my-own' }),
   schema: z.object({
