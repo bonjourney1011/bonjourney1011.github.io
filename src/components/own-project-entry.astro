@@ -14,19 +14,19 @@ const ext = { target: '_blank', rel: 'noopener noreferrer' };
 ---
 
 <article class="project" id={entry.id}>
-  {
-    screenshot && (
-      <figure class="shot">
-        {url ? (
+  {/* always 4 children (shot, header, body, footer): they line up with the next card via subgrid */}
+  <figure class="shot">
+    {
+      screenshot &&
+        (url ? (
           <a href={url} {...ext} tabindex="-1" aria-hidden="true">
             <img src={withBase(screenshot)} alt="" width="1200" height="675" loading="lazy" />
           </a>
         ) : (
           <img src={withBase(screenshot)} alt={`${title} home page`} width="1200" height="675" loading="lazy" />
-        )}
-      </figure>
-    )
-  }
+        ))
+    }
+  </figure>
 
   <header>
     <p class="meta">
@@ -37,7 +37,7 @@ const ext = { target: '_blank', rel: 'noopener noreferrer' };
       {
         url ? (
           <a href={url} {...ext}>
-            {title} <span class="arrow" aria-hidden="true">↗</span>
+            {title}&nbsp;<span class="arrow" aria-hidden="true">↗</span>
           </a>
         ) : (
           title
@@ -68,9 +68,13 @@ const ext = { target: '_blank', rel: 'noopener noreferrer' };
 </article>
 
 <style>
+  /* cards in the same row share row heights (subgrid), so images, titles, questions and tags align */
   .project {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    margin-bottom: 18px;
     background: var(--paper-raised);
     border: 1px solid var(--rule);
     border-radius: var(--radius);
@@ -228,12 +232,18 @@ const ext = { target: '_blank', rel: 'noopener noreferrer' };
     border-top: 0;
     font-size: 11px;
   }
+  header {
+    align-self: start;
+  }
+  .body {
+    align-self: start;
+  }
   footer {
+    align-self: end;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 10px;
-    margin-top: auto;
     padding-top: 14px;
   }
   .stack {

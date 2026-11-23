@@ -38,8 +38,8 @@ const projects = await getPublishedOwnProjects();
   .list {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
-    align-items: start;
+    column-gap: 18px;
+    row-gap: 0; /* cards are subgrids spanning 4 rows; they space themselves with margin-bottom */
   }
   @media (min-width: 560px) {
     .list {
