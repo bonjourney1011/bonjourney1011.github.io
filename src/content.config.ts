@@ -66,7 +66,7 @@ const ownProjects = defineCollection({
   schema: z.object({
     title: z.string(),
     tagline: z.string(),
-    status: z.enum(['Live', 'Building', 'Paused']),
+    status: z.enum(['Live', 'Prototype', 'Building', 'Paused']),
     role: z.string(),
     started: z.string(),
     url: z.union([z.url(), z.literal('')]).default(''), // live site; empty until launch

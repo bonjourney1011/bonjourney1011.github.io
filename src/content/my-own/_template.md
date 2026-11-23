@@ -5,7 +5,7 @@
 # 3. Set draft: false (or delete the line), then commit and push to publish.
 title: Project name
 tagline: One line on what it is and who it's for.
-status: Building # Live | Building | Paused
+status: Building # Live | Prototype | Building | Paused
 role: Founder — what you own
 started: '2026'
 url: '' # live link, e.g. https://example.com
