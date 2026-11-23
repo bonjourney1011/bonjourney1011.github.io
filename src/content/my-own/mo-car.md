@@ -8,17 +8,12 @@ url: https://mocar.mobeautyanalyst.com/
 screenshot: /images/what-i-build/mo-car.webp
 stack: [HTML/JS prototype, Python data pipeline, Docker, Caddy, Cloudflare Tunnel]
 order: 2
+why:
+  question: Why am I building it?
+  answer: A car is the second-biggest purchase most Vietnamese families make, yet the real price is hard to see. The same model costs a different amount in each province because registration fees and taxes differ, and every dealer negotiates its own discount.
 ---
 
-<details>
-<summary>Why am I building it?</summary>
-
-A car is the second-biggest purchase most Vietnamese families make, yet the real price is hard to see. The same model costs a different amount in each province because registration fees and taxes differ, and every dealer negotiates its own discount.
-
-</details>
-
-<details>
-<summary>What does the prototype show?</summary>
+### What does the prototype show?
 
 - **Why prices differ** — the same car's on-road price across provinces, with the tax and fee gap made visible.
 - **Compare within a segment** — side-by-side models (for example Vios, City or Accent) with on-road prices, showing only the specs that differ.
@@ -27,11 +22,6 @@ A car is the second-biggest purchase most Vietnamese families make, yet the real
 - **Luxury cars that keep their value** — how much of the list price a model keeps after five years; compare any 3 of 72 luxury models.
 - **Vietnamese and English** — every screen switches language.
 
-</details>
-
-<details>
-<summary>Where does the analyst show?</summary>
+### Where does the analyst show?
 
 Every number shows its source and date, and when the data is too thin the product says "not enough data" instead of guessing. Dealer discounts are still being collected, so they stay hidden until there are enough quotes to be fair. It's the same discipline as my analytics work, applied to a business I own end to end.
-
-</details>

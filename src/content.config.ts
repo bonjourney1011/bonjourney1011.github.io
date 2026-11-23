@@ -73,6 +73,8 @@ const ownProjects = defineCollection({
     repoUrl: z.url().optional(), // only for public repos
     stack: z.array(z.string()),
     order: z.number(),
+    // Shown on the card as the one open question; the Markdown body goes under "More".
+    why: z.object({ question: z.string(), answer: z.string() }),
     // Screenshot of the live site, shown under the collapsible sections.
     screenshot: z
       .string()
