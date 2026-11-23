@@ -73,6 +73,11 @@ const ownProjects = defineCollection({
     repoUrl: z.url().optional(), // only for public repos
     stack: z.array(z.string()),
     order: z.number(),
+    // Screenshot of the live site, shown under the collapsible sections.
+    screenshot: z
+      .string()
+      .regex(/^\/images\/what-i-build\/[a-z0-9-]+\.(webp|png|jpg)$/, 'screenshot must be /images/what-i-build/<name>.webp')
+      .optional(),
     draft: z.boolean().default(false),
   }),
 });

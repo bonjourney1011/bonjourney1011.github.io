@@ -1,12 +1,13 @@
 ---
 import '../styles/prose-article-body.css';
 import { render, type CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/url-helpers';
 
 interface Props {
   entry: CollectionEntry<'ownProjects'>;
 }
 const { entry } = Astro.props;
-const { title, tagline, status, role, started, url, repoUrl, stack } = entry.data;
+const { title, tagline, status, role, started, url, repoUrl, stack, screenshot } = entry.data;
 const { Content } = await render(entry);
 ---
 
@@ -23,6 +24,20 @@ const { Content } = await render(entry);
   <div class="prose body">
     <Content />
   </div>
+
+  {
+    screenshot && (
+      <figure class="shot">
+        {url ? (
+          <a href={url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${title}`}>
+            <img src={withBase(screenshot)} alt={`${title} home page`} width="1200" height="675" loading="lazy" />
+          </a>
+        ) : (
+          <img src={withBase(screenshot)} alt={`${title} home page`} width="1200" height="675" loading="lazy" />
+        )}
+      </figure>
+    )
+  }
 
   <footer>
     <ul class="stack" aria-label="Built with">
@@ -97,8 +112,77 @@ const { Content } = await render(entry);
     margin-top: 24px;
     font-size: 16px;
   }
-  .body :global(h3) {
-    font-size: 19px;
+  /* each section is a <details>: only the question shows until the reader opens it */
+  .body :global(details) {
+    border-top: 1px solid var(--rule);
+  }
+  .body :global(details:last-of-type) {
+    border-bottom: 1px solid var(--rule);
+  }
+  .body :global(summary) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 2px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .body :global(summary::-webkit-details-marker) {
+    display: none;
+  }
+  .body :global(summary::after) {
+    content: '+';
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--ink-soft);
+    transition: transform 0.25s var(--ease-out), background 0.2s;
+  }
+  .body :global(details[open] > summary::after) {
+    transform: rotate(45deg);
+    background: var(--bar);
+  }
+  .body :global(summary:hover::after) {
+    background: var(--bar);
+  }
+  .body :global(summary:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .body :global(details > :not(summary)) {
+    margin-top: 0;
+  }
+  .body :global(details > :last-child) {
+    margin-bottom: 18px;
+  }
+  .body :global(.note) {
+    margin-top: 14px;
+  }
+  .shot {
+    margin: 24px 0 0;
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: calc(var(--radius) - 4px);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s var(--ease-out);
+  }
+  .shot a:hover img {
+    transform: translateY(-3px);
   }
   footer {
     display: flex;
